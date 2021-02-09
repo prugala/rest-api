@@ -35,5 +35,4 @@ security:
         - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, method: POST, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/users/.*/activate, method: PUT, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
