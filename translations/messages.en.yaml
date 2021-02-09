@@ -1,0 +1,5 @@
+user:
+    register:
+        email:
+            title: 'Activate account'
+            content: 'id: %id% token: %token%'

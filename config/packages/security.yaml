@@ -1,0 +1,39 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    providers:
+        api_user_provider:
+            id: App\Security\UserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        api:
+            stateless: true
+            anonymous: true
+            lazy: true
+            provider: api_user_provider
+            json_login:
+                check_path: /authentication
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        refresh:
+            pattern: ^/token/refresh
+            stateless: true
+            anonymous: true
+
+    access_control:
+        - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users, method: POST, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users/.*/activate, method: PUT, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
